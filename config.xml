@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <modules>
+        <module category="Heizung-Lueftung-Klima" context="hs_humidity" id="14186" name="hs_humidity" sinternal_name="Luftfeuchtigkeit" external_name="Luftfeuchtigkeit (14186)" version="0.0.1">
+            <inputs>
+                <input type="number" const_name="temperature" init_value="0">Temperatur in °C</input>
+                <input type="number" const_name="rel_air_humidity" init_value="0">Relative Luftfeuchtigkeit in %</input>
+            </inputs>
+            <outputs>
+                <output type="number" const_name="abs_air_humidity" init_value="-1">Absolute Luftfeuchtigkeit in g/m³</output>
+                <output type="number" const_name="max_air_humidity" init_value="-1">Maximale absolute Luftfeuchtigkeit in g/m³</output>
+                <output type="number" const_name="enthalpy" init_value="-1">Enthalpie in kJ/kg</output>
+                <output type="number" const_name="dew_point" init_value="-1">Taupunkt in °C</output>
+            </outputs>
+           <remanent_variables>
+            </remanent_variables>
+            <imports>
+            </imports>
+        </module>
+    </modules>
+    <logging type="None" ip="" port="" />
+</config>

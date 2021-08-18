@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+   <instances>
+       <instance id="1" module_id="14186">
+           <inputs>
+               <input index="1">20</input>
+               <input index="2">70</input>
+           </inputs>
+           <outputs>
+           </outputs>
+       </instance>
+   </instances>
+</project>
