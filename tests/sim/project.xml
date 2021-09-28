@@ -4,7 +4,8 @@
        <instance id="1" module_id="14186">
            <inputs>
                <input index="1">20</input>
-               <input index="2">70</input>
+               <input index="2">60</input>
+               <input index="0">1013</input>
            </inputs>
            <outputs>
            </outputs>
