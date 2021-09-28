@@ -64,7 +64,7 @@ class Hs_climate_analysis14186(hsl20_3.BaseModule):
 
         abs_air_humidity = vapor_pressure / (461.51 * temp_in_k)  # in kg/m³
         self.DEBUG.set_value("Abs. humidity (kg/cbm)", abs_air_humidity)
-        max_abs_air_humidity = sat_vapor_pressure / (461.51 * temp_in_k)  # in kg/m³
+        max_abs_air_humidity = sat_vapor_pressure / (461.51 * temp_in_k) / 100  # in kg/m³
         self.DEBUG.set_value("Max. abs. humidity (kg/cbm)", max_abs_air_humidity)
         air_density = self.calc_air_weight(temp_in_k, rel_hum, air_pressure, sat_vapor_pressure)
         self.DEBUG.set_value("Air density (kg/cbm)", air_density)
