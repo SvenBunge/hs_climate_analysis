@@ -29,11 +29,11 @@ class Hs_climate_analysis14186(hsl20_3.BaseModule):
 #### Own written code can be placed after this commentblock . Do not change or delete commentblock! ####
 ###################################################################################################!!!##
 
-        self.DEBUG = self.FRAMEWORK.create_debug_section()
+        # self.DEBUG = self.FRAMEWORK.create_debug_section()
 
         self.temperature = -999
         self.rel_humidity = -999
-        self.air_pressure = 1013.25
+        self.air_pressure = 101325
 
     def on_init(self):
         pass
@@ -46,37 +46,37 @@ class Hs_climate_analysis14186(hsl20_3.BaseModule):
         elif index == self.PIN_I_AIR_PRESSURE:
             self.air_pressure = value * 100
 
-        self.DEBUG.set_value("Temp. (C)", self.temperature)
-        self.DEBUG.set_value("Rel. humidity (%)", self.rel_humidity * 100)
-        self.DEBUG.set_value("Air pressure (Pa)", self.air_pressure)
+        # self.DEBUG.set_value("Temp. (C)", self.temperature)
+        # self.DEBUG.set_value("Rel. humidity (%)", self.rel_humidity)
+        # self.DEBUG.set_value("Air pressure (Pa)", self.air_pressure)
 
         if self.temperature != -999 and self.rel_humidity != -999:
-            self.calculate_all_humidity_values(self.temperature, self.rel_humidity, self.air_pressure)
+            self.calculate_all_humidity_values(self.temperature, self.rel_humidity / 100, self.air_pressure)
 
     def calculate_all_humidity_values(self, temp, rel_hum, air_pressure):
         temp_in_k = 273.15 + temp  # in K
-        self.DEBUG.set_value("Temp. (K)", temp_in_k)
+        # self.DEBUG.set_value("Temp. (K)", temp_in_k)
 
         sat_vapor_pressure = self.calc_saturation_vapor_pressure(temp)  # in Pa
-        self.DEBUG.set_value("Sat. vapor pressure (Pa)", sat_vapor_pressure)
+        # self.DEBUG.set_value("Sat. vapor pressure (Pa)", sat_vapor_pressure)
         vapor_pressure = sat_vapor_pressure * rel_hum  # in Pa
-        self.DEBUG.set_value("Vapor pressure (Pa)", vapor_pressure)
+        # self.DEBUG.set_value("Vapor pressure (Pa)", vapor_pressure)
 
         abs_air_humidity = vapor_pressure / (461.51 * temp_in_k)  # in kg/m³
-        self.DEBUG.set_value("Abs. humidity (kg/cbm)", abs_air_humidity)
-        max_abs_air_humidity = sat_vapor_pressure / (461.51 * temp_in_k) / 100  # in kg/m³
-        self.DEBUG.set_value("Max. abs. humidity (kg/cbm)", max_abs_air_humidity)
+        # self.DEBUG.set_value("Abs. humidity (kg/cbm)", abs_air_humidity)
+        max_abs_air_humidity = sat_vapor_pressure / (461.51 * temp_in_k)  # in kg/m³
+        # self.DEBUG.set_value("Max. abs. humidity (kg/cbm)", max_abs_air_humidity)
         air_density = self.calc_air_weight(temp_in_k, rel_hum, air_pressure, sat_vapor_pressure)
-        self.DEBUG.set_value("Air density (kg/cbm)", air_density)
+        # self.DEBUG.set_value("Air density (kg/cbm)", air_density)
 
         enthalpy = self.calc_enthalpy(temp, abs_air_humidity)  # in kJ/kg
-        self.DEBUG.set_value("Enthalpy (kJ/kg)", enthalpy)
+        # self.DEBUG.set_value("Enthalpy (kJ/kg)", enthalpy)
         dew_point = self.calc_dew_point(temp, vapor_pressure)
-        self.DEBUG.set_value("Dew point (C)", dew_point)
+        # self.DEBUG.set_value("Dew point (C)", dew_point)
         sultry = abs_air_humidity > 0.0135  # 13,5g/m³ or dew point > 16°C - https://de.wikipedia.org/wiki/Schwüle
-        self.DEBUG.set_value("Sultry (yes/no)", int(sultry))
+        # self.DEBUG.set_value("Sultry (yes/no)", int(sultry))
         heat_warning = dew_point > 20  # DWD raises a heat warning if the dew point gets over 20°C - https://www.dwd.de/DE/wetter/thema_des_tages/2020/6/21.html
-        self.DEBUG.set_value("Heat (yes/no)", int(heat_warning))
+        # self.DEBUG.set_value("Heat (yes/no)", int(heat_warning))
 
         # Set values to outputs
         self._set_output_value(self.PIN_O_ABS_AIR_HUMIDITY, abs_air_humidity * 1000)  # convert to g/m³
@@ -85,6 +85,7 @@ class Hs_climate_analysis14186(hsl20_3.BaseModule):
         self._set_output_value(self.PIN_O_ENTHALPY, enthalpy)
         self._set_output_value(self.PIN_O_DEW_POINT, dew_point)
         self._set_output_value(self.PIN_O_SULTRY, int(sultry))
+        self._set_output_value(self.PIN_O_HEAT_WARNING, int(heat_warning))
 
     @staticmethod
     def calc_air_weight(temp_in_k, rel_hum, air_pressure, sat_vapor_pressure):

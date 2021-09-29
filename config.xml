@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <modules>
-        <module category="Heizung-Lueftung-Klima" context="hs_climate_analysis" id="14186" name="hs_climate_analysis" sinternal_name="Klima-Analyse" external_name="Klima-Analyse (14186)" version="0.0.1">
+        <module category="Heizung-Lueftung-Klima" context="hs_climate_analysis" id="14186" name="hs_climate_analysis" sinternal_name="Klima-Analyse" external_name="Klima-Analyse (14186)" version="0.1">
             <inputs>
                 <input type="number" const_name="temperature" init_value="0">Temperatur in °C</input>
                 <input type="number" const_name="rel_air_humidity" init_value="0">Relative Luftfeuchtigkeit in %</input>
